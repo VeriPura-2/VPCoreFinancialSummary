@@ -232,6 +232,7 @@ html.printing .chart.tmsc{height:165px!important}
 .es{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 12px}
 .es .kpi b{font-size:21px}
 .es-l{margin:0 0 6px;padding-left:18px;font-size:14px;line-height:1.5}.es-l li{margin:0 0 6px}
+.next{background:var(--brand);color:var(--brand-text);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:14px;line-height:1.4}.next b{display:block;color:#fff;font-size:16px;margin-bottom:3px}.next strong{color:#fff}
 .print-only{display:none}
 .status{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .status h4{margin:0 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
@@ -434,12 +435,13 @@ table.data th:first-child,table.data td:first-child{text-align:left}
       <p class="cap">Latest reported annual revenue, US$ millions. Company or segment revenue, not TMS alone; most of the 100 platforms are private and do not disclose.</p>
       <div class="chart tmsc" style="height:300px"><canvas id="c-tms" role="img" aria-label="Annual revenue of the largest listed TMS platforms: Manhattan Associates 1,081, WiseTech CargoWise 757, Descartes 729, e2open 608, Trimble Transportation and Logistics 549 million US dollars"></canvas></div>
     </div>
-    <div class="panel"><h3>Proven in live UK trials</h3><p class="cap">Food routes from three origin countries into the UK.</p><div class="proof">
-    <div class="lead2"><b>3 importers in live trials</b>Each supplies one of the UK's top 5 supermarkets, on food routes from three origin countries. Consignment passports are verified by UK Port Health.</div>
+    <div class="panel"><h3>Proven in live UK trials</h3><p class="cap">Completed successfully on food routes from three origin countries into the UK.</p><div class="proof">
+    <div class="lead2"><b>Live trials completed with 3 importers</b>Each supplies one of the UK's top 5 supermarkets, on food routes from three origin countries. Consignment passports are verified by UK Port Health.</div>
     <div class="kpi"><b>Zero</b><span>Rejections on verified shipments</span></div>
     <div class="kpi"><b>&lt; 2 min</b><span>Document validation per consignment</span></div>
     <div class="kpi"><b>100%</b><span>Pre-cleared before sailing</span></div>
   </div>
+  <div class="next"><b>Next: first TMS partner</b><span><strong>MOU with a UK TMS</strong> (in active discussion, supplier to the forwarder that completed our trial) → asynchronous volume testing → API integration → <strong>first paid transactions, month 5</strong></span></div>
 
   </div>
 </section>
@@ -491,7 +493,7 @@ table.data th:first-child,table.data td:first-child{text-align:left}
         <div class="frow"><span class="lab">Checked by CORE</span><div class="fbar l3 narrow" style="width:19.2%"><em>9,600 · 80% use</em></div></div>
         <div class="frow"><span class="lab">Fees a month</span><div class="fbar out" style="width:max-content">€1.06M · about €110 per check</div></div>
       </div>
-      <ul class="pbul"><li><b>Channel pricing:</b> 0.1% is VeriPura's wholesale price. The TMS and forwarder set their own margin to the importer.</li><li><b>First partner:</b> trial completed with a UK forwarder (100% food), now in integration talks with the forwarder's TMS supplier.</li><li><b>Ramp-up:</b> for later partners, usage builds over 12 months from go-live, or from a category's launch if that comes later.</li><li><b>Integration incentive:</b> averages €67k per partner, recovered from 2 to 7 months of that partner's fees.</li></ul>
+      <ul class="pbul"><li><b>Channel pricing:</b> 0.1% is VeriPura's wholesale price. The TMS and forwarder set their own margin to the importer.</li><li><b>First partner:</b> trial completed with a UK forwarder (100% food); MOU with the forwarder's TMS supplier in active discussion.</li><li><b>Ramp-up:</b> for later partners, usage builds over 12 months from go-live, or from a category's launch if that comes later.</li><li><b>Integration incentive:</b> averages €67k per partner, recovered from 2 to 7 months of that partner's fees.</li></ul>
     </div>
     <div class="panel">
     <h3>Revenue diversifies by category and channel</h3>
@@ -705,7 +707,7 @@ function draw(){
   }
   // TMS market
   charts.push(new Chart(document.getElementById('c-tms'),{type:'bar',data:{labels:['Manhattan Associates','WiseTech CargoWise','Descartes','e2open','Trimble T&L'],datasets:[{data:[1081,757,729,608,549],backgroundColor:[s1,s1,s1,s1,s1],borderRadius:4,barPercentage:.7}]},plugins:[{id:'tv',afterDatasetsDraw(ch){const c=ch.ctx;c.save();c.font='600 12.5px Schibsted Grotesk, system-ui, sans-serif';c.fillStyle=root('--ink');c.textBaseline='middle';ch.getDatasetMeta(0).data.forEach((b,j)=>c.fillText('$'+ch.data.datasets[0].data[j].toLocaleString('en-GB')+'M',b.x+6,b.y));c.restore()}}],
-    options:base({indexAxis:'y',interaction:{mode:'nearest',intersect:true},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+c.parsed.x.toLocaleString('en-GB')+'M'}}},scales:{x:Object.assign(base().scales.y,{min:0,max:1300,ticks:{color:root('--slate'),callback:x=>'$'+x+'M'}}),y:{grid:{display:false},afterFit:a=>{a.width=Math.max(a.width,150)},ticks:{color:root('--ink'),font:{weight:'600'}},border:{display:false}}}})}));
+    options:base({indexAxis:'y',interaction:{mode:'nearest',intersect:true},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+c.parsed.x.toLocaleString('en-GB')+'M'}}},scales:{x:Object.assign(base().scales.y,{min:0,max:1300,ticks:{color:root('--slate'),callback:x=>'$'+x+'M'}}),y:{grid:{display:false},afterFit:a=>{a.width=Math.max(a.width,150)},ticks:{color:root('--ink'),font:{weight:'600'},autoSkip:false},border:{display:false}}}})}));
   // mix
   const mixK=[['food','Food',s1],['app','Apparel',s2],['cosm','Cosmetics',s3],['pharma','Pharma',s4],['supp','Supplements',s5],['dir','Direct importers',s6]];
   legend('lg-mix',mixK.map(([k,t,c])=>[c,t]));
